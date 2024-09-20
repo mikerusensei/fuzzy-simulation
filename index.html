@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts -->
+    <link href="https://fonts.cdnfonts.com/css/typeface-mario-world-pixel-filled" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
+    <link rel="stylesheet" href="styles/images.css" />
+
+    <!-- Scripts -->
+    <script src="js/test-api.js" defer></script>
+    <script src="js/script.js" defer></script>
+
+    <link rel="icon" href="https://res.cloudinary.com/dzmhkee5i/image/upload/v1726847159/fuzzy/ni1eppr7ixaqkvaqnhzr.png" type="image/icon_type" />
+
+    <title>Fuzzy Logic | Simulation</title>
+
+    <!-- <script src="test-api.js" defer></script> -->
+</head>
+<body>
+    <header class="header">
+        <div class="title-logo">
+            <p class="title">Fuzzy Logic | Simulation</p>
+            <p class="type-sim">Egg Incubator Simulation</p>
+        </div>
+    </header>
+    <main>
+        <section class="input-section">
+            <div class="param-div">
+                <header class="header-container">
+                    <p>Parameters</p>
+                </header>
+                <div class="content-container">
+                    <p>Temperature</p>
+                    <input id="temp-input">
+                    <p>Humidity</p>
+                    <input id="humid-input">
+                    <div class="buttons">
+                        <div class="egg-related">
+                            <button id="add-egg">Add Egg</button>
+                            <button id="remove-egg">Remove Egg</button>
+                        </div>
+                        <div class="sim-related">
+                            <button id="start-sim">Start Sim</button>
+                            <button id="stop-sim">Stop Sim</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        <section class="sim-section">
+            <div class="sim-div">
+                <header class="header-container">
+                    Simulation
+                </header>
+                <div id="sim-area">
+                    <div id="aircon-area">
+                        <img class="image" src="https://res.cloudinary.com/dzmhkee5i/image/upload/c_crop,g_auto,h_145,w_355/fuzzy/zyrmhrmax4i8s8i7mkkz.jpg" />
+                    </div>
+                    <div id="egg-area">
+
+                    </div>
+
+                    <div id="humidifier-area">
+                        <img class="image" src="https://res.cloudinary.com/dzmhkee5i/image/upload/c_crop,h_500,w_310/fuzzy/tewypc6gxxyfpidkae3n.jpg" />
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="developer">
+            <p>Developed with ❤ by mikerusensei</p>
+        </div>
+    </footer>
+</body>
+</html>
