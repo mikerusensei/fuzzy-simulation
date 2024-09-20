@@ -1,0 +1,27 @@
+.title-logo{
+    width: 100vw;
+    height: 5.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--black);
+}
+
+.title{
+    font-family: 'Typeface Mario World Pixel Outline', sans-serif;
+    font-size: 1.25rem;
+    color: var(--white);
+}
+
+.type-sim{
+    font-family: 'Typeface Mario World Pixel Outline', sans-serif;
+    font-size: 1rem;
+    color: var(--white);
+}
+
+.header-container{
+    margin: 10px 0px;
+    background-color: var(--black);
+    color: var(--white);
+}

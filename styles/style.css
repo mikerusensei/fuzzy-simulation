@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --black: #1b1b1b;
+    --white: #f5f5f5;
+}
+
+main {
+    min-height: 100vh;
+}
+
+.input-section{
+    margin-top: 1rem;
+    border: 1px solid red
+}
+
+.param-div{
+    display: flex;
+    flex-direction: column;
+}
+
+.content-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.content-container p{
+    text-align: left;
+}
+
+.sim-area{
+    min-height: 100vh;
+    border: solid red;
+}
+
+#egg-area{
+    min-height: 50vh;
+
+    border: solid blue;
+}
