@@ -1,10 +1,19 @@
-class Fuzzificate{
+export class Fuzzificate{
     constructor(){
         this.fuzz = [];
+        this.fuzzVal = [];
     }
     
     addFuzz(name, range){
         this.fuzz.push({name, range});
+        let fuzzLength = this.fuzz.length;
+
+        for (let i = 0; i < fuzzLength; i++){
+            let [minRange, peakRange, maxRange] = this.fuzz[i];
+            let value = this.memberTriangle(temp, minRange, peakRange, maxRange);
+
+            this.fuzzVal.push(value)
+        }
     }
     
     memberTriangle(temp, minRange, peakRange, maxRange){
@@ -25,30 +34,30 @@ class Fuzzificate{
         }
     }
     
-    coldTemp(temp){
-        let [minRange, peakRange, maxRange] = this.getRange('Cold Temp');
-        return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    }
+    // coldTemp(temp){
+    //     let [minRange, peakRange, maxRange] = this.getRange('Cold Temp');
+    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
+    // }
     
-    lowTemp(temp){
-        let [minRange, peakRange, maxRange] = this.getRange('Low Temp');
-        return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    }
+    // lowTemp(temp){
+    //     let [minRange, peakRange, maxRange] = this.getRange('Low Temp');
+    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
+    // }
     
-    optimalTemp(temp){
-        let [minRange, peakRange, maxRange] = this.getRange('Optimal Temp');
-        return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    }
+    // optimalTemp(temp){
+    //     let [minRange, peakRange, maxRange] = this.getRange('Optimal Temp');
+    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
+    // }
     
-    highTemp(temp){
-        let [minRange, peakRange, maxRange] = this.getRange('High Temp');
-        return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    }
+    // highTemp(temp){
+    //     let [minRange, peakRange, maxRange] = this.getRange('High Temp');
+    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
+    // }
     
-    criticalTemp(temp){
-        let [minRange, peakRange, maxRange] = this.getRange('Critical Temp');
-        return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    }
+    // criticalTemp(temp){
+    //     let [minRange, peakRange, maxRange] = this.getRange('Critical Temp');
+    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
+    // }
     
     getRange(name){
         let fuzzLength = this.fuzz.length;
@@ -60,12 +69,16 @@ class Fuzzificate{
         }
     }
     
+    getFuzzVal(){
+        return this.fuzzVal
+    }
+
     getFuzz(){
         return this.fuzz
     }
 }
 
-class Rule{
+export class Rule{
     constructor(){
         this.rules = [];
     }
@@ -83,32 +96,29 @@ class Rule{
     }
 }
 
-class Interference{
+export class Interference{
     constructor(fuzz, rules){
         this.fuzz = fuzz;
         this.rules = rules
     }
     
     application(temp){
-        const coldTemp = this.fuzz.coldTemp(temp);
-        const lowTemp = this.fuzz.lowTemp(temp);
-        const optimalTemp = this.fuzz.optimalTemp(temp);
-        const highTemp = this.fuzz.highTemp(temp);
-        const criticalTemp = this.fuzz.criticalTemp(temp);
-        
         const settings = {
-            [this.rules.getRules('Cold Temp')[0]]: coldTemp,
-            [this.rules.getRules('Low Temp')[0]]: lowTemp,
-            [this.rules.getRules('Optimal Temp')[0]]: optimalTemp,
-            [this.rules.getRules('High Temp')[0]]: highTemp,
-            [this.rules.getRules('Critical Temp')[0]]: criticalTemp,
+
         };
-                
+
+        let fuzz = this.fuzz.getFuzz();
+        let fuzzVal = this.fuzz.getFuzzVal();
+
+        for (let i = 0;i < fuzzVal.length; i++){
+            settings[i] = fuzzVal[i];
+        }
+    
         return settings;
     }
 }
 
-class Defuzzificate{
+export class Defuzzificate{
     constructor(fuzzyValue, rules){
         this.fuzzyValue = fuzzyValue;
         this.rules = rules;

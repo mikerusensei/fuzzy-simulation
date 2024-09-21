@@ -1,10 +1,36 @@
+import { getData } from "./test-api";
+import { Fuzzificate, Rule, Interference, Defuzzificate} from "./process"
+
 const eggArea = document.getElementById('egg-area');
 const addEggBtn = document.getElementById('add-egg');
 const rmEggBtn = document.getElementById('remove-egg');
 const effectArea = document.getElementById('effect-area');
+const tempVal = document.getElementById('temp-input');
 
 addEggBtn.addEventListener('click', addEgg);
 rmEggBtn.addEventListener('click', removeEgg);
+
+const fuzz = new Fuzzificate();
+fuzz.addFuzz('Cold Temp', [16, 16, 30]);
+fuzz.addFuzz('Low Temp', [16, 25, 34]);
+fuzz.addFuzz("Optimal Temp", [30, 34, 38]);
+fuzz.addFuzz("High Temp", [34, 42, 50]);
+fuzz.addFuzz("Critical Temp", [38, 50, 50]);
+
+const rule = new Rule();
+rule.addRule("Cold Temp", ["Increase Heater Temp", 2]);
+rule.addRule("Low Temp", ["Turn Heater On", 1]);
+rule.addRule("Optimal Temp", ["Turn off Devices", 0]);
+rule.addRule("High Temp", ["Turn Aircondition On", -1]);
+rule.addRule("Critical Temp", ["Increase Aircondition Temp", -2]);
+
+const interference = new Interference(fuzz, rule);
+
+const temp = tempVal.value;
+const fuzzyVal = interference.application(temp)
+
+const defuzz = new Defuzzificate(fuzzyVal, rule);
+const defuzVal = defuzz.defuzzificate();
 
 setData();
 
