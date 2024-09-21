@@ -1,11 +1,11 @@
-import { getData } from './test-api.js';
-
 const eggArea = document.getElementById('egg-area');
 const addEggBtn = document.getElementById('add-egg');
 const rmEggBtn = document.getElementById('remove-egg');
+const effectArea = document.getElementById('effect-area');
 
 addEggBtn.addEventListener('click', addEgg);
 rmEggBtn.addEventListener('click', removeEgg);
+
 setData();
 
 function addEgg(){
@@ -32,6 +32,23 @@ function removeEgg(){
     }
 }
 
+function createWind(){
+    const container = document.createElement('div');
+    const wind = document.createElement('img');
+    
+    wind.src = "assets/wind.svg"
+    container.classList.add('wind-img');
+
+    container.style.top = `${Math.random() * 50}vh`;
+    container.style.animationDuration = `${Math.random() * 5 + 2}s`;
+    container.appendChild(wind);
+    effectArea.appendChild(container);
+
+    container.addEventListener('animationend', () => {
+        container.remove();
+    });
+}
+
 async function setData(){
     const tempInput = document.getElementById('temp-input');
     const humidInput = document.getElementById('humid-input');
@@ -41,3 +58,5 @@ async function setData(){
     tempInput.value = data.main.temp;
     humidInput.value = data.main.humidity;
 }
+
+setInterval(createWind,1000);
