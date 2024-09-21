@@ -38,6 +38,13 @@ main {
     border: solid red;
 }
 
+#effect-area{
+    position: absolute;
+    width: 100vw;
+    min-height: 50vh;
+    border: solid green;
+}
+
 #egg-area{
     min-height: 50vh;
 

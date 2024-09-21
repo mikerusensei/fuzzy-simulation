@@ -1,0 +1,20 @@
+.wind-img{
+    position: absolute;
+    font-family: "Vast Shadow", sans-serif;
+    font-size: 1rem;
+    color: #2d6a4f;
+    animation: line linear; 
+}
+
+.wind-img img{
+    width: 50px;
+}
+
+@keyframes line {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100vw);
+    }
+}
