@@ -1,4 +1,4 @@
-const key = "yourkey";
+const key = "26924590c0b621368126975dff9de26e";
 const lat = 14.865350
 const lon = 120.957100
 
