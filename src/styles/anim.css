@@ -1,20 +1,18 @@
-.wind-img{
+.wind-img, .humid-img{
     position: absolute;
     font-family: "Vast Shadow", sans-serif;
     font-size: 1rem;
     color: #2d6a4f;
     animation: line linear; 
-}
-
-.wind-img img{
-    width: 50px;
+    width: 30px;
+    height: auto;
 }
 
 @keyframes line {
     from {
-        transform: translateX(0);
+        transform: translateX(-5vw);
     }
     to {
-        transform: translateX(100vw);
+        transform: translateX(105vw);
     }
 }

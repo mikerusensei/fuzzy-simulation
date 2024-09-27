@@ -6,22 +6,26 @@ export class Fuzzificate{
     
     addFuzz(name, range){
         this.fuzz.push({name, range});
-        let fuzzLength = this.fuzz.length;
+    }
 
-        for (let i = 0; i < fuzzLength; i++){
-            let [minRange, peakRange, maxRange] = this.fuzz[i];
+    calculateFuzz(temp){
+        for (const key in this.fuzz){
+            const range = this.fuzz[key].range
+            const [minRange, peakRange, maxRange] = range;
+            // console.log("min", minRange, "peak", peakRange, "max", maxRange, "TEMP: ", temp)
             let value = this.memberTriangle(temp, minRange, peakRange, maxRange);
-
-            this.fuzzVal.push(value)
+            // console.log("Value: ", value);
+            this.fuzzVal.push(value);
         }
+        return this.fuzzVal;
     }
     
     memberTriangle(temp, minRange, peakRange, maxRange){
-        if (temp < minRange || temp >= maxRange){
+        if (temp < minRange || temp > maxRange){
             return 0;
-        } else if (temp == peakRange){
+        } else if (temp === minRange || temp === peakRange || temp === maxRange){
             return 1;
-        } else if (temp >= minRange && temp < peakRange){
+        } else if (temp >= minRange && temp <= peakRange){
             let numerator = temp - minRange;
             let denominator = peakRange - minRange;
             let answer = numerator / denominator;
@@ -33,144 +37,53 @@ export class Fuzzificate{
             return answer;
         }
     }
-    
-    // coldTemp(temp){
-    //     let [minRange, peakRange, maxRange] = this.getRange('Cold Temp');
-    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    // }
-    
-    // lowTemp(temp){
-    //     let [minRange, peakRange, maxRange] = this.getRange('Low Temp');
-    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    // }
-    
-    // optimalTemp(temp){
-    //     let [minRange, peakRange, maxRange] = this.getRange('Optimal Temp');
-    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    // }
-    
-    // highTemp(temp){
-    //     let [minRange, peakRange, maxRange] = this.getRange('High Temp');
-    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    // }
-    
-    // criticalTemp(temp){
-    //     let [minRange, peakRange, maxRange] = this.getRange('Critical Temp');
-    //     return this.memberTriangle(temp, minRange, peakRange, maxRange);
-    // }
-    
-    getRange(name){
-        let fuzzLength = this.fuzz.length;
-        for (let i = 0; i < fuzzLength; i++){
-            if (this.fuzz[i].name === name){
-                return this.fuzz[i].range;
+    getVal(name){
+        for (let i = 0; i < this.fuzz.length; i++){
+            if (this.fuzz[i].name == name){
+                return this.fuzzVal[i];
             }
-            
         }
     }
     
+    defuzz(control){
+        let numerator = 0;
+        let denominator = 0;
+        
+        for (const key in control.rules){
+            const rule = control.rules[key];
+            const max = Math.max(rule.rules[0], rule.rules[1]);
+            // console.log('Max: ', max)
+            for (const index in this.fuzz){
+                if(this.fuzz[index].name === rule.name){
+                    const cValue = this.fuzz[index].range[1];
+                    // console.log("Cvalue: ", cValue);
+
+                    numerator += max * cValue;
+                    denominator += max;
+                    break;
+                }
+            }
+        }
+        
+        if (denominator === 0){
+            return 0;
+        }else{
+            return numerator / denominator;
+        }
+    }
     getFuzzVal(){
-        return this.fuzzVal
-    }
-
-    getFuzz(){
-        return this.fuzz
-    }
-}
-
-export class Rule{
-    constructor(){
-        this.rules = [];
-    }
-    addRule(name, condition){
-        this.rules.push({name, condition});
-    }
-    getRules(name){
-        let rulesLength = this.rules.length;
-        for (let i = 0; i < rulesLength; i++){
-            if (this.rules[i].name === name){
-                return this.rules[i].condition;
-            }
-            
-        }
+        return this.fuzzVal;
     }
 }
 
 export class Interference{
-    constructor(fuzz, rules){
-        this.fuzz = fuzz;
-        this.rules = rules
+    constructor(){
+        this.rules = [];
     }
-    
-    application(temp){
-        const settings = {
-
-        };
-
-        let fuzz = this.fuzz.getFuzz();
-        let fuzzVal = this.fuzz.getFuzzVal();
-
-        for (let i = 0;i < fuzzVal.length; i++){
-            settings[i] = fuzzVal[i];
-        }
-    
-        return settings;
+    addRule(name, rule){
+        this.rules.push({name: name, rules: rule})
+    }
+    getRules(){
+        return this.rules;
     }
 }
-
-export class Defuzzificate{
-    constructor(fuzzyValue, rules){
-        this.fuzzyValue = fuzzyValue;
-        this.rules = rules;
-        this.numerator = 0;
-        this.denominator = 0;
-    }
-    
-    defuzzificate(){
-        const weights = {
-            [this.rules.getRules('Cold Temp')[0]]: this.rules.getRules('Cold Temp')[1],
-            [this.rules.getRules('Low Temp')[0]]: this.rules.getRules('Low Temp')[1],
-            [this.rules.getRules('Optimal Temp')[0]]: this.rules.getRules('Optimal Temp')[1],
-            [this.rules.getRules('High Temp')[0]]: this.rules.getRules('High Temp')[1],
-            [this.rules.getRules('Critical Temp')[0]]: this.rules.getRules('Critical Temp')[1],
-        };
-        
-        for (const key in this.fuzzyValue) {
-            const membershipValue = this.fuzzyValue[key]; // Get the fuzzy membership value
-            const weight = weights[key]; // Get the weight for the fuzzy set
-
-            // Accumulate the weighted numerator and the total weight denominator
-            this.numerator += membershipValue * weight;
-            this.denominator += membershipValue;
-        }
-
-        if (this.denominator === 0) return 0; // Avoid division by zero
-        return this.numerator / this.denominator; // Return the defuzzified value
-        
-        
-    }
-}
-
-const fuzz = new Fuzzificate();
-fuzz.addFuzz('Cold Temp', [16, 16, 30]);
-fuzz.addFuzz('Low Temp', [16, 25, 34]);
-fuzz.addFuzz("Optimal Temp", [30, 34, 38]);
-fuzz.addFuzz("High Temp", [34, 42, 50]);
-fuzz.addFuzz("Critical Temp", [38, 50, 50]);
-
-const rules = new Rule();
-rules.addRule("Cold Temp", ["Increase Heater Temp", 2]);
-rules.addRule("Low Temp", ["Turn Heater On", 1]);
-rules.addRule("Optimal Temp", ["Turn off Devices", 0]);
-rules.addRule("High Temp", ["Turn Aircondition On", -1]);
-rules.addRule("Critical Temp", ["Increase Aircondition Temp", -2]);
-
-const interference = new Interference(fuzz, rules);
-
-const temperature = 29;
-
-const fuzzyValue = interference.application(temperature);
-
-const defuzz = new Defuzzificate(fuzzyValue, rules);
-const defuzzValue = defuzz.defuzzificate();
-console.log(defuzzValue);

@@ -1,4 +1,4 @@
-const key = "26924590c0b621368126975dff9de26e";
+const key = process.env.PARCEL_WEATHER_API;
 const lat = 14.865350
 const lon = 120.957100
 
