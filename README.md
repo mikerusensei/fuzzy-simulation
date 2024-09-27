@@ -12,3 +12,4 @@ A simulation of fuzzy logic
 * https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
 * https://developer.mozilla.org/en-US/docs/Web/API/Element/childElementCount
 * https://www.w3schools.com/tags/att_input_value.asp
+* https://opengameart.org/content/lil-chick
