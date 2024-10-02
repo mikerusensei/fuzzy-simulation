@@ -17,7 +17,8 @@ export function addEgg(){
         
         eggArea.appendChild(divContainer);
 
-        let hatchingTime = 5 * 60;
+        let hatchingTime = 1 * 60;
+        let formatedSeconds;
 
         const interval = setInterval(function(){
             const minutes = Math.floor(hatchingTime / 60);
@@ -25,9 +26,16 @@ export function addEgg(){
             if (hatchingTime <= 0){
                 clearInterval(interval);
                 imageContainer.src = "https://res.cloudinary.com/dzmhkee5i/image/upload/v1727460193/fuzzy/z0k3fozpasouayxrxy9u.png";
+                imageContainer.style.width = '100px';
             }
 
-            timer.innerHTML = `${minutes}:${seconds}`;
+            if (seconds < 10){
+                formatedSeconds = '0' + seconds;
+            }else{
+                formatedSeconds= seconds;
+            }
+
+            timer.innerHTML = `${minutes}:${formatedSeconds}`;
 
             hatchingTime--;
         }, 1000)
