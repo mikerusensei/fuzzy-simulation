@@ -1,0 +1,2 @@
+*{margin:0;padding:0}:root{--black:#1b1b1b;--white:#f5f5f5}main{min-height:100vh;overflow-x:hidden}.input-section{border:1px solid red;margin-top:1rem}.param-div{flex-direction:column;display:flex}.content-container{flex-flow:column wrap;justify-content:center;display:flex}.content-container p{text-align:left}.sim-area{border:solid red;min-height:100vh}#effect-area{z-index:-9999;border:solid green;width:100vw;min-height:50vh;position:absolute}#egg-area{border:solid #00f;min-height:50vh}
+/*# sourceMappingURL=index.e6b6ce17.css.map */
