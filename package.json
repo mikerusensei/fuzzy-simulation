@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A simulation of fuzzy logic",
   "scripts": {
-    "build": "parcel build src/index.html && cp -r src/assets dist/assets",
+    "build": "parcel build --public-url https://mikerusensei.github.io/fuzzy-simulation src/index.html && rm -rf docs && mv dist docs && cp -r src/assets docs/assets",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
